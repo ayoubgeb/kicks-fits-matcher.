@@ -1,263 +1,32 @@
-index.html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Kicks & Fits Matcher</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
-      margin: 0;
-      padding: 20px;
-    }
+<script>
+  function generateSuggestion() {
+    const sneakerColor = document.getElementById('sneakerColor').value;
+    const occasion = document.getElementById('outfitOccasion').value;
+    const style = document.getElementById('preferredStyle').value;
+    const contrast = document.getElementById('colorContrast').value;
+    const clothing = document.getElementById('clothingItem').value;
+    const season = document.getElementById('season').value;
+    const location = document.getElementById('location').value;
 
-    h1 {
-      text-align: center;
-      color: #333;
-    }
+    const accessorySelect = document.getElementById('accessory');
+    const accessoryText = accessorySelect.options[accessorySelect.selectedIndex].text;
 
-    .matcher-container {
-      max-width: 900px;
-      margin: auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+    // Affiliate links per country
+    const affiliateLinks = {
+      denmark: "https://direct.me/l/mLxP",
+      usa: "https://amzn.to/453IyCL"
+    };
 
-    .form-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
+    const link = affiliateLinks[location] || "#";
 
-    .form-group {
-      flex: 1;
-      min-width: 250px;
-    }
+    const suggestion = `👟 Your ${sneakerColor.toLowerCase()} sneakers fit perfectly for a ${occasion.toLowerCase()} vibe. Match them with ${clothing} for a clean ${style.toLowerCase()} look. Try a ${contrast.toLowerCase()} palette to balance your outfit. Ideal for ${season} seasons. Top it off with a matching accessory: ${accessoryText}\n\n🛒 Shop here: ${link}`;
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
+    document.getElementById('result').value = suggestion;
+    document.getElementById('outputArea').innerText = "📌 Styling saved:\n" + suggestion;
+  }
 
-    select, input[type="text"], textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #87cefa;
-      border-radius: 8px;
-      background-color: #e6f2ff;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      height: 120px;
-      resize: none;
-    }
-
-    .buttons {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    button {
-      padding: 10px 25px;
-      margin: 5px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn-generate {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    .btn-reset {
-      background-color: #f44336;
-      color: white;
-    }
-
-    .affiliate-links {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .affiliate-links a {
-      display: inline-block;
-      margin: 10px;
-      padding: 12px 18px;
-      background-color: #1e90ff;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    @media (max-width: 600px) {
-      .form-section {
-        flex-direction: column;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="matcher-container">
-    <h1>👟 Kicks & Fits Matcher</h1>
-
-    <!-- Sneaker Color -->
-    <div class="form-group">
-      <label for="sneakerColor">Sneaker Color</label>
-      <input type="text" id="sneakerColor" placeholder="e.g., White with red trim">
-    </div>
-
-    <!-- Main Form Sections -->
-    <div class="form-section">
-      <!-- Left Box -->
-      <div class="form-group">
-        <label for="occasion">Outfit Occasion</label>
-        <select id="occasion">
-          <option value="">Select</option>
-          <option>Casual</option>
-          <option>Formal</option>
-          <option>Sports</option>
-          <option>Streetwear</option>
-          <option>Work</option>
-          <option>Gym</option>
-          <option>Party</option>
-          <option>Date</option>
-          <option>Travel</option>
-          <option>Lounge</option>
-        </select>
-      </div>
-
-      <!-- Middle Box -->
-      <div class="form-group">
-        <label for="style">Preferred Style</label>
-        <select id="style">
-          <option value="">Select</option>
-          <option>Minimalist</option>
-          <option>Vintage</option>
-          <option>Boho</option>
-          <option>Edgy</option>
-          <option>Sporty</option>
-          <option>Modern</option>
-          <option>Preppy</option>
-          <option>Grunge</option>
-          <option>Elegant</option>
-          <option>Classic</option>
-        </select>
-      </div>
-
-      <!-- Right Box -->
-      <div class="form-group">
-        <label for="contrast">Color Contrast</label>
-        <select id="contrast">
-          <option value="">Select</option>
-          <option>Neutral</option>
-          <option>Bold</option>
-          <option>Pastel</option>
-          <option>Monochrome</option>
-          <option>Earth tones</option>
-          <option>Complementary</option>
-          <option>Warm</option>
-          <option>Cool</option>
-          <option>Dark</option>
-          <option>Bright</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Second Row -->
-    <div class="form-section">
-      <div class="form-group">
-        <label for="clothingItem">Matching Clothing</label>
-        <select id="clothingItem">
-          <option value="">Select</option>
-          <option>Jeans</option>
-          <option>Joggers</option>
-          <option>Chinos</option>
-          <option>Skirt</option>
-          <option>Shorts</option>
-          <option>Blazer</option>
-          <option>Hoodie</option>
-          <option>Tracksuit</option>
-          <option>Cardigan</option>
-          <option>Overalls</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="season">Season</label>
-        <select id="season">
-          <option value="">Select</option>
-          <option>Spring</option>
-          <option>Summer</option>
-          <option>Fall</option>
-          <option>Winter</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="accessory">Accessory</label>
-        <select id="accessory">
-          <option value="">Select</option>
-          <option>Cap</option>
-          <option>Sunglasses</option>
-          <option>Watch</option>
-          <option>Bag</option>
-          <option>Necklace</option>
-          <option>Scarf</option>
-          <option>Bracelet</option>
-          <option>Ring</option>
-          <option>Hair Clip</option>
-          <option>Gloves</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Result Box -->
-    <div class="form-group">
-      <label for="result">Styling Suggestion</label>
-      <textarea id="result" readonly></textarea>
-    </div>
-
-    <!-- Buttons -->
-    <div class="buttons">
-      <button class="btn-generate" onclick="generateSuggestion()">Generate Suggestion</button>
-      <button class="btn-reset" onclick="resetForm()">Reset</button>
-    </div>
-
-    <!-- Affiliate Links -->
-    <div class="affiliate-links">
-      <a href="https://direct.me/l/mLxP" target="_blank">🛍️ Shop in Denmark</a>
-      <a href="https://amzn.to/453IyCL" target="_blank">🛒 Shop in USA</a>
-    </div>
-  </div>
-
-  <script>
-    function generateSuggestion() {
-      const sneakerColor = document.getElementById("sneakerColor").value;
-      const occasion = document.getElementById("occasion").value;
-      const style = document.getElementById("style").value;
-      const contrast = document.getElementById("contrast").value;
-      const clothingItem = document.getElementById("clothingItem").value;
-      const season = document.getElementById("season").value;
-      const accessory = document.getElementById("accessory").value;
-
-      const suggestion = `Your ${sneakerColor} sneakers are a great choice for a ${occasion.toLowerCase()} look. Pair them with ${clothingItem.toLowerCase()} to match your ${style.toLowerCase()} style. Embrace a ${contrast.toLowerCase()} palette for harmony. Add a ${accessory.toLowerCase()} to polish the outfit. Best suited for the ${season.toLowerCase()} season.`;
-
-      document.getElementById("result").value = suggestion;
-    }
-
-    function resetForm() {
-      document.querySelectorAll("select, input, textarea").forEach(el => el.value = "");
-    }
-  </script>
-</body>
-</html>
+  function resetForm() {
+    document.querySelectorAll('select, textarea').forEach(el => el.value = '');
+    document.getElementById('outputArea').innerText = '';
+  }
+</script>
